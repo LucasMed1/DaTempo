@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPlan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div><label><input id="nome" type="text" placeholder="Nome da matéria"></label></div><br>
+    <div><label><input id="dias" type="number" placeholder="Dias  até a prova"></label></div><br>
+    <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
+    <div><select name="Dificuldade" id="dificuldade">
+        <option>Escolha a dificuldade</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </select></div><br>
+    <div><button onclick="gerarPlanos()" id="botao">Gerar plano</button></div>
+    
+    <div>
+
+    </div>
+</body>
+<script>
+    
+    function gerarPlanos(){
+        let inputMateria = document.querySelector("#nome")
+        let nomeMateria = inputMateria.value
+        let inputDias = document.querySelector("#dias")
+        let quantosDias = inputDias.value
+        let inputHoras = document.querySelector("#horas")
+        let quantasHoras = inputHoras.value
+        let inputDificuldade = document.querySelector("dificuldade")
+        let dificuldadeEscolhida = inputDificuldade.value
+        
+
+
+
+
+    }
+
+
+</script>
+</html>
