@@ -7,23 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div><label><input id="nome" type="text" placeholder="Nome da matéria"></label></div><br>
-    <div><label><input id="dias" type="number" placeholder="Dias até a prova"></label></div><br>
-    <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
-    <div><select name="Dificuldade" id="dificuldade">
-        <option>Escolha a dificuldade</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-    </select></div><br>
-    <div><button onclick="gerarPlanos()" id="botao">Gerar plano</button></div>
-    
-    <div>
-
+    <h1>StudyPlan</h1>
+    <div class="container"> 
+        <div class="card">
+            <p>QUAL MATÉRIA OU ASSUNTO?</p>
+            <div><label><input id="nome" type="text" placeholder="Nome da matéria"></label></div><br>
+            <p>SEU NÍVEL ATUAL</p>
+            <div class="dificuldade">
+                <button class="nivel">1</button>
+                <button class="nivel">2</button>
+                <button class="nivel">3</button>
+                <button class="nivel">4</button>
+            </div><br>
+            <p>HORAS POR DIA DISPONÍVEIS</p>
+            <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
+            <p>PRAZO (EM DIAS)</p>
+            <div><label><input id="dias" type="number" placeholder="Dias até a prova"></label></div><br>
+            <div><button onclick="gerarPlanos()" id="botao">Ver meu veredito</button>
+        </div>
     </div>
+
 </body>
 <script>
     
@@ -37,7 +40,7 @@
         let inputHoras = document.querySelector("#horas")
         let quantasHoras = Number(inputHoras.value)
 
-        let inputDificuldade = document.querySelector("#dificuldade")
+        let inputDificuldade = document.querySelector(".dificuldade")
         let dificuldadeEscolhida = Number(inputDificuldade.value)
 
         let resultado = calcularTempo(quantosDias, quantasHoras, dificuldadeEscolhida)
