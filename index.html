@@ -9,7 +9,7 @@
 <body>
 
     <div><label><input id="nome" type="text" placeholder="Nome da matéria"></label></div><br>
-    <div><label><input id="dias" type="number" placeholder="Dias  até a prova"></label></div><br>
+    <div><label><input id="dias" type="number" placeholder="Dias até a prova"></label></div><br>
     <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
     <div><select name="Dificuldade" id="dificuldade">
         <option>Escolha a dificuldade</option>
@@ -30,18 +30,37 @@
     function gerarPlanos(){
         let inputMateria = document.querySelector("#nome")
         let nomeMateria = inputMateria.value
+
         let inputDias = document.querySelector("#dias")
-        let quantosDias = inputDias.value
+        let quantosDias = Number(inputDias.value)
+
         let inputHoras = document.querySelector("#horas")
-        let quantasHoras = inputHoras.value
-        let inputDificuldade = document.querySelector("dificuldade")
-        let dificuldadeEscolhida = inputDificuldade.value
-        
+        let quantasHoras = Number(inputHoras.value)
 
+        let inputDificuldade = document.querySelector("#dificuldade")
+        let dificuldadeEscolhida = Number(inputDificuldade.value)
 
+        let resultado = calcularTempo(quantosDias, quantasHoras, dificuldadeEscolhida)
+    
 
+        if(nomeMateria ==='' || (quantosDias < 1) || quantasHoras < 1 ){
+            alert(`Resultado não aceito`)
+        }else if(resultado < 4){
+            alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Parece muito mas você consegue`)
+        }else if(resultado >= 4 && resultado<= 6 ){
+             alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Vai ser ralado demais, mas vai ter que sentar e estudar`)
+        }else if(resultado > 6){
+             alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Isso é impossível sinto muito`)
+        }
 
     }
+    function calcularTempo(dias, horas, dificuldade){
+        let horasTotais = dias * horas
+        let peso = 1 + (dificuldade * 0.25)
+        let resultado = (horasTotais * peso) / dias
+        return resultado
+    }
+
 
 
 </script>
