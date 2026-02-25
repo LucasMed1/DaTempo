@@ -17,20 +17,15 @@ body {
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
-button {
+button{
     width: 100%;
     padding: 12px;
     border: none;
     border-radius: 10px;
     background-color: #2f80ed;
-    color: white;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
-}
-
-button:hover {
-    background-color: #1c5ec9;
 }
 input, select {
     width: 100%;
@@ -47,8 +42,20 @@ input, select {
     background: white;
     cursor: pointer;
 }
+.nivel:hover {
+    border-color: #1c5ec9;
+}
 .dificuldade {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
+}
+.card p{
+    color: grey;
+}
+.header-topo{
+    text-align: center;
+}
+.header-topo p {
+    color: grey;
 }
