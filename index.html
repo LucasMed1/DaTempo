@@ -57,11 +57,22 @@
         }
 
     }
-    function calcularTempo(dias, horas, dificuldade){
+    function analisarPlano(dias, horas, dificuldade){
         let horasTotais = dias * horas
-        let peso = 1 + (dificuldade * 0.25)
-        let resultado = (horasTotais * peso) / dias
+        let baseMinima = dificuldade * 15
+        let indice = horasTotais / baseMinima
+        let resultado = 
+        if(indice>1){
+            return resultado
+        }else if(0.8<indice<1){
+            return resultado
+        }else if(indice<0.8){
+            return resultado
+        }
         return resultado
+    }
+    function mostrarResultados(){
+
     }
 
 
