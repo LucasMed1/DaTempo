@@ -21,10 +21,10 @@
                 
                 <p>SEU NÍVEL ATUAL</p>
                 <div class="dificuldade">
-                    <button class="nivel">Sei nada <p>Nunca vi esse assunto</p></button>
-                    <button class="nivel">Sei pouco <p>Já ouvi falar, mas...</p></button>
-                    <button class="nivel">Médio <p>Sei o básico</p></button>
-                    <button class="nivel">Avançado <p>Domino boa parte</p></button>
+                    <button class="nivel" value="1">Sei nada <p>Nunca vi esse assunto</p></button>
+                    <button class="nivel"value="2">Sei pouco <p>Já ouvi falar, mas...</p></button>
+                    <button class="nivel"value="3">Médio <p>Sei o básico</p></button>
+                    <button class="nivel"value="4">Avançado <p>Domino boa parte</p></button>
                 </div><br>
                 
                 <p>DIFICULDADE DA MATÉRIA</p>
@@ -75,7 +75,21 @@
     </div>
 </body> <!-->
 <script>
-    
+    let nivelEscolhido = null
+    let botoes = document.querySelector(".nivel")
+    botoes[0].onclick = function{
+        nivelEscolhido = 1
+    }
+    botoes[1].onclick = function{
+        nivelEscolhido = 2
+    }
+    botoes[2].onclick = function{
+        nivelEscolhido = 3
+    }
+    botoes[3].onclick = function{
+        nivelEscolhido = 4
+    }
+
     function gerarPlanos(){
         let inputMateria = document.querySelector("#nome")
         let nomeMateria = inputMateria.value
@@ -86,36 +100,36 @@
         let inputHoras = document.querySelector("#horas")
         let quantasHoras = Number(inputHoras.value)
 
-        let inputDificuldade = document.querySelector(".dificuldade")
-        let dificuldadeEscolhida = Number(inputDificuldade.value)
+        let nivel = nivelEscolhido
 
-        let resultado = calcularTempo(quantosDias, quantasHoras, dificuldadeEscolhida)
+        let inputDificuldade = document.querySelector("#dificuldade-materia")
+        let dificuldadeMateria = Number(inputDificuldade.value)
+
     
 
-        if(nomeMateria ==='' || (quantosDias < 1) || quantasHoras < 1 ){
+        if(nomeMateria ==='' || (quantosDias < 1) || quantasHoras < 1 || nivel===null ){
             alert(`Resultado não aceito`)
-        }else if(resultado < 4){
-            alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Parece muito mas você consegue`)
-        }else if(resultado >= 4 && resultado<= 6 ){
-             alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Vai ser ralado demais, mas vai ter que sentar e estudar`)
-        }else if(resultado > 6){
-             alert(`Para ${nomeMateria} terá que estudar ${resultado} horas por dia. Isso é impossível sinto muito`)
+            return
         }
 
+        let resultado = calcularTempo(quantosDias, quantasHoras, dificuldadeEscolhida)
+
     }
-    function analisarPlano(dias, horas, dificuldade){
+    function analisarPlano(dias, horas, dificuldade, nivel){
         let horasTotais = dias * horas
-        let baseMinima = dificuldade * 15
+        let baseMinima = (dificuldade * 10)+((5-nivel)*10)
         let indice = horasTotais / baseMinima
-        let resultado = 
+        let status
         if(indice>1){
-            return resultado
+            status = "viavel"
         }else if(0.8<indice<1){
-            return resultado
+            status = "apertado"
         }else if(indice<0.8){
-            return resultado
+            status = "inviavel"
         }
-        return resultado
+        return{
+
+        }
     }
     function mostrarResultados(){
 
