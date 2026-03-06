@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=timer" />
 </head>
 <body>
+    <!--Container total-->
     <div class="main-container"> 
         <header class="header-topo">
             <h1><span class="material-symbols-outlined">timer</span>DáTempo?</h1>
             <p>Preencha baixo e descubra se seu plano fecha</p>
         </header>
 
+        <!--Container para as informações-->
         <div class="container"> 
             <div class="card">
                 <p>QUAL MATÉRIA OU ASSUNTO?</p>
@@ -28,7 +30,11 @@
                 </div><br>
                 
                 <p>DIFICULDADE DA MATÉRIA</p>
-                <div><label><input id="dificuldade-materia" type="number" placeholder="Dificuldade de 1-5"></label></div><br>
+                <div><label><input id="dificuldade-materia" type="number" placeholder="Dificuldade de 1-5"></label></div>
+
+                <p id="contador-assuntos">0 assuntos adicionados</p>
+
+                <div><button onclick="adicionarPlanos()" id="botao-add">Adicionar assunto</button></div><br>
                 
                 <p>HORAS POR DIA DISPONÍVEIS</p>
                 <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
@@ -37,62 +43,60 @@
                 <div><label><input id="dias" type="number" placeholder="Dias até a prova"></label></div><br>
                 
                 <div><button onclick="gerarPlanos()" id="botao">Ver meu veredito</button></div>
+
             </div>
         </div>
     </div>
-    <!--<div class="container-resultado">
-        <header class="header-topo">
-            <h1><span class="material-symbols-outlined">timer</span>DáTempo?</h1>
-            <p>Aqui está o resultado do seu plano</p>
-        </header>
-
-        <div class="container"> 
-            <div class="card">
-                <p>QUAL MATÉRIA OU ASSUNTO?</p>
-                <div><label><input id="nome" type="text" placeholder="Nome da matéria"></label></div><br>
-                
-                <p>SEU NÍVEL ATUAL</p>
-                <div class="dificuldade">
-                    <button class="nivel">Sei nada <p>Nunca vi esse assunto</p></button>
-                    <button class="nivel">Sei pouco <p>Já ouvi falar, mas...</p></button>
-                    <button class="nivel">Médio <p>Sei o básico</p></button>
-                    <button class="nivel">Avançado <p>Domino boa parte</p></button>
-                </div><br>
-                
-                <p>DIFICULDADE DA MATÉRIA</p>
-                <div><label><input id="dificuldade-materia" type="number" placeholder="Dificuldade de 1-5"></label></div><br>
-                
-                <p>HORAS POR DIA DISPONÍVEIS</p>
-                <div><label><input id="horas" type="number" placeholder="Horas por dia"></label></div><br>
-                
-                <p>PRAZO (EM DIAS)</p>
-                <div><label><input id="dias" type="number" placeholder="Dias até a prova"></label></div><br>
-                
-                <div><button onclick="gerarPlanos()" id="botao">Ver meu veredito</button></div>
-            </div>
-        </div>
-
-    </div>
-</body> <!-->
 <script>
-    let nivelEscolhido = null
-    let botoes = document.querySelector(".nivel")
-    botoes[0].onclick = function{
-        nivelEscolhido = 1
-    }
-    botoes[1].onclick = function{
-        nivelEscolhido = 2
-    }
-    botoes[2].onclick = function{
-        nivelEscolhido = 3
-    }
-    botoes[3].onclick = function{
-        nivelEscolhido = 4
-    }
+    //lista de assuntos vazia pra ir adicionando
+    let listaAssuntos = []
 
+    //Escolher o botão e o valor dele
+    let nivelEscolhido = null
+    let botoes = document.querySelectorAll(".nivel")
+    botoes[0].onclick = function(){
+
+    botoes[0].classList.add("ativo")
+    botoes[1].classList.remove("ativo")
+    botoes[2].classList.remove("ativo")
+    botoes[3].classList.remove("ativo")
+
+    nivelEscolhido = 1
+}
+
+botoes[1].onclick = function(){
+
+    botoes[0].classList.remove("ativo")
+    botoes[1].classList.add("ativo")
+    botoes[2].classList.remove("ativo")
+    botoes[3].classList.remove("ativo")
+
+    nivelEscolhido = 2
+}
+
+botoes[2].onclick = function(){
+
+    botoes[0].classList.remove("ativo")
+    botoes[1].classList.remove("ativo")
+    botoes[2].classList.add("ativo")
+    botoes[3].classList.remove("ativo")
+
+    nivelEscolhido = 3
+}
+
+botoes[3].onclick = function(){
+
+    botoes[0].classList.remove("ativo")
+    botoes[1].classList.remove("ativo")
+    botoes[2].classList.remove("ativo")
+    botoes[3].classList.add("ativo")
+
+    nivelEscolhido = 4
+}
+
+
+    //função que vai gerar os planos
     function gerarPlanos(){
-        let inputMateria = document.querySelector("#nome")
-        let nomeMateria = inputMateria.value
 
         let inputDias = document.querySelector("#dias")
         let quantosDias = Number(inputDias.value)
@@ -100,41 +104,61 @@
         let inputHoras = document.querySelector("#horas")
         let quantasHoras = Number(inputHoras.value)
 
-        let nivel = nivelEscolhido
+        let horasTotais = quantasHoras * quantosDias
+        let totalNecessario = calcularHorasTotaisNecessarias()
+        
+        if (quantasHoras < 1 || quantosDias < 1){
+            alert(`Dias e Horas não podem ser menores que 1`)
+        }
+        let indice = horasTotais / totalNecessario
+        let horasPdIdeal = totalNecessario / quantosDias
+        let horasPd = horasTotais / quantosDias
 
-        let inputDificuldade = document.querySelector("#dificuldade-materia")
-        let dificuldadeMateria = Number(inputDificuldade.value)
+        if(indice < 0.8){
+            alert(`Plano inviável, você tem ${horasPd.toFixed(1)} horas por dia de estudo e você precisa de ${horasPdIdeal.toFixed(1)}horas `)
 
-    
+        }else if(indice > 0.8 && indice < 1){
+            alert(`Plano possível, você tem ${horasPd.toFixed(1)} horas por dia de estudo e você precisa de ${horasPdIdeal.toFixed(1)}horas `)
 
-        if(nomeMateria ==='' || (quantosDias < 1) || quantasHoras < 1 || nivel===null ){
-            alert(`Resultado não aceito`)
-            return
+        }else if(indice > 1){
+            alert(`Plano super viável, você tem ${horasPd.toFixed(1)} horas por dia de estudo e você precisa de ${horasPdIdeal.toFixed(1)}horas `)
+
         }
 
-        let resultado = calcularTempo(quantosDias, quantasHoras, dificuldadeEscolhida)
+
 
     }
-    function analisarPlano(dias, horas, dificuldade, nivel){
-        let horasTotais = dias * horas
-        let baseMinima = (dificuldade * 10)+((5-nivel)*10)
-        let indice = horasTotais / baseMinima
-        let status
-        if(indice>1){
-            status = "viavel"
-        }else if(0.8<indice<1){
-            status = "apertado"
-        }else if(indice<0.8){
-            status = "inviavel"
+    //Função que vai adicionar assuntos
+    function adicionarPlanos(){
+        let nomeMateria = document.querySelector("#nome").value
+        let dificuldadeMateria = Number(document.querySelector("#dificuldade-materia").value)
+        if(nomeMateria === '' || dificuldadeMateria < 1 || nivelEscolhido === null){
+        alert("Preencha tudo antes de adicionar")
+        return}
+
+        let assunto = {
+            nome: nomeMateria,
+            dificuldade: dificuldadeMateria,
+            nivel: nivelEscolhido
         }
-        return{
-
+        listaAssuntos.push(assunto)
+        let contador = document.querySelector("#contador-assuntos")
+        contador.innerText = `${listaAssuntos.length} assuntos adicionados `
+        console.log(listaAssuntos)
+    }
+    //Função que vai calcular horas baseado na dificuldade e nivel atual
+    function calcularHorasAssunto(dificuldade, nivel){
+        let baseMinima = (dificuldade * 3)+((4-nivel)*2)
+        return baseMinima
+    }
+    //Função que vai somar as horas necessárias de todos assuntos
+    function calcularHorasTotaisNecessarias(){
+        let totalNecessario = 0
+        for (let assunto of listaAssuntos){
+            totalNecessario += calcularHorasAssunto(assunto.dificuldade, assunto.nivel)
         }
+        return totalNecessario
     }
-    function mostrarResultados(){
-
-    }
-
 
 
 </script>

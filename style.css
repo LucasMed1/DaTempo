@@ -59,3 +59,7 @@ input, select {
 .header-topo p {
     color: grey;
 }
+.nivel.ativo {
+    border-color: #2f80ed;
+    background-color: #eef5ff;
+}
